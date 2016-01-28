@@ -34,4 +34,12 @@ public class BulletController : MonoBehaviour {
             Destroy(gameObject);
         }
 	}
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<EnemyHealth>().decreaseHealth(5f);
+        }
+    }
 }

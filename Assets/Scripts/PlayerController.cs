@@ -11,13 +11,15 @@ public class PlayerController : MonoBehaviour {
     public float maxSpeed = 10f;
 
     public float speed = 300f;
-    public float jumpSpeed = 50f;
+    public float jumpSpeed = 30f;
 
     public bool isFacingRight = false;
 
     public float shootTimer = 0.3f;
 
     public GameObject bullet;
+
+    public int score = 0;
 
 	// Use this for initialization
 	void Start ()
@@ -49,8 +51,9 @@ public class PlayerController : MonoBehaviour {
 
         grounded = Physics2D.OverlapCircle(groundDetector.position, 0.15f);
 
-        if (Input.GetKey(KeyCode.Space) && grounded)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
+            transform.GetChild(2).GetComponent<AudioSource>().Play();
             physics.AddForce(new Vector2(0, jumpSpeed));
         }
 
@@ -63,6 +66,8 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.LeftControl) && shootTimer == 0)
         {
+            transform.GetChild(1).GetComponent<AudioSource>().Play();
+
             if (isFacingRight)
             {
                 Instantiate(bullet, transform.position + new Vector3(-1, 0, 0), Quaternion.identity);
