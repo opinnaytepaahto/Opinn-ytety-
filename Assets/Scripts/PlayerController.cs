@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour {
         {
             transform.GetChild(1).GetComponent<AudioSource>().Play();
 
+            bullet.GetComponent<BulletController>().facingRight = isFacingRight;
+
             if (isFacingRight)
             {
                 Instantiate(bullet, transform.position + new Vector3(-1, 0, 0), Quaternion.identity);

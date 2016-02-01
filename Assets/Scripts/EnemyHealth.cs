@@ -11,18 +11,66 @@ public class EnemyHealth : MonoBehaviour {
 
     private bool firstDestroy = true;
 
+    private float shootTimer = 1.5f;
+
+    private bool isFacingRight;
+
     public GameObject healthBar;
     public GameObject scoreText;
+
+    public GameObject bullet;
+
+    public GameObject player;
+
+    private Rigidbody2D physics;
 
 	// Use this for initialization
 	void Start () {
         currentHealth = maxHealth;
+
+        physics = GetComponent<Rigidbody2D>();
 
         // InvokeRepeating("decreaseHealth", 1f, 0.5f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (player.transform.position.x < transform.position.x)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            isFacingRight = true;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            isFacingRight = false;
+        }
+
+           shootTimer -= Time.deltaTime;
+
+        if (shootTimer <= 0)
+        {
+            shootTimer = 0;
+        }
+
+        if (shootTimer == 0 && currentHealth > 0)
+        {
+            bullet.GetComponent<BulletController>().facingRight = isFacingRight;
+
+            transform.GetChild(2).GetComponent<AudioSource>().Play();
+
+            if (isFacingRight)
+            {
+                Instantiate(bullet, transform.position + new Vector3(-0.65f, 0.1225f, 0), Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(bullet, transform.position + new Vector3(0.68f, 0.1225f, 0), Quaternion.identity);
+            }
+
+            shootTimer = 1.5f;
+        }
+
         if (currentHealth <= 0)
         {
             if (firstDestroy)

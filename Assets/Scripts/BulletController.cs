@@ -6,6 +6,8 @@ public class BulletController : MonoBehaviour {
     private Rigidbody2D physics;
     private GameObject player;
 
+    public bool facingRight;
+
     private float timer = 5f;
 
 	// Use this for initialization
@@ -15,7 +17,7 @@ public class BulletController : MonoBehaviour {
 
         physics = GetComponent<Rigidbody2D>();
 
-        if (controller.isFacingRight)
+        if (facingRight)
         {
             physics.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
         }
