@@ -5,6 +5,9 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D physics;
 
+    public float maxOxygen = 500f;
+    public float currentOxygen = 0f;
+
     public Transform groundDetector;
     public bool grounded = true;
 
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour {
     public float shootTimer = 0.3f;
 
     public GameObject bullet;
+    public GameObject oxygenBar;
 
     public int score = 0;
 
@@ -25,7 +29,11 @@ public class PlayerController : MonoBehaviour {
 	void Start ()
     {
         physics = GetComponent<Rigidbody2D>();
-	}
+
+        InvokeRepeating("decreaseOxygen", 1f, 1f);
+
+        currentOxygen = maxOxygen;
+    }
 	
 	// Update is called once per frame
     void Update()
@@ -92,5 +100,18 @@ public class PlayerController : MonoBehaviour {
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+    }
+
+    public void decreaseOxygen()
+    {
+        currentOxygen -= 5f;
+
+        float tempHealth = currentOxygen / maxOxygen;
+        setOxygenBar(tempHealth);
+    }
+
+    public void setOxygenBar(float oxygen)
+    {
+        oxygenBar.transform.localScale = new Vector2(Mathf.Clamp(oxygen, 0f, 1f), oxygenBar.transform.localScale.y);
     }
 }

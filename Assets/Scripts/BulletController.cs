@@ -19,11 +19,11 @@ public class BulletController : MonoBehaviour {
 
         if (facingRight)
         {
-            physics.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
+            physics.AddForce(new Vector2(-20, 0), ForceMode2D.Impulse);
         }
         else
         {
-            physics.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+            physics.AddForce(new Vector2(20, 0), ForceMode2D.Impulse);
         }
     }
 	
